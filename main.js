@@ -8,6 +8,9 @@ var bodyImage;
 var outlineImage;
 
 window.onload = async function() {
+	document.getElementById('earsColor').value = randomColor();
+	document.getElementById('bodyColor').value = randomColor();
+  
   canvas = document.getElementById("render");
   context = canvas.getContext("2d");
 
@@ -15,6 +18,7 @@ window.onload = async function() {
   bodyImage = await loadImage('body.png')
   outlineImage = await loadImage('outline.png')
   windowLoaded = true;
+
   console.log("Window finished loading")
 }
 
@@ -108,11 +112,20 @@ function degreesToRadians(degrees) {
   return degrees * (Math.PI/180.0);
 }
 
+function randomColor() {
+	return "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+}
+
 document.getElementById('downloadButton').onclick = function(button) {
 	var link = document.createElement('a');
   link.download = 'designed-doodle.png';
   link.href = canvas.toDataURL('image/png')
   link.click();
+};
+
+document.getElementById('randomizeColor').onclick = function(button) {
+	document.getElementById('earsColor').value = randomColor();
+	document.getElementById('bodyColor').value = randomColor();
 };
 
 window.requestAnimationFrame(draw)
