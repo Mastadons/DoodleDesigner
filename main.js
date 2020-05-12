@@ -10,7 +10,7 @@ var outlineImage;
 window.onload = async function() {
 	randomizeColor()
 	randomizeFace()
-	
+
   canvas = document.getElementById("render");
   context = canvas.getContext("2d");
 
@@ -19,6 +19,7 @@ window.onload = async function() {
   outlineImage = await loadImage('outline.png')
   windowLoaded = true;
 
+  canvas.onwheel = function(event) { event.preventDefault(); }
   console.log("Window finished loading")
 }
 
@@ -57,7 +58,7 @@ async function draw() {
   context.drawImage(tintImage(bodyImage, bodyColor), 0, 0);
 	
 	let eyesXLocation = 300+parseInt(document.getElementById('eyesXLocation').value);
-	let eyesYLocation = 275+parseInt(document.getElementById('eyesYLocation').value)+25;
+	let eyesYLocation = 300+parseInt(document.getElementById('eyesYLocation').value);
 	var eyesRotation = parseInt(document.getElementById('eyesRotation').value);
 
 	if (eyesType == 3 && eyesRotation > -155 && eyesRotation < -45) { 
@@ -77,7 +78,7 @@ async function draw() {
 	context.translate(-eyesXLocation, -eyesYLocation);
 
 	let mouthXLocation = 300+parseInt(document.getElementById('mouthXLocation').value);
-	let mouthYLocation = 375+parseInt(document.getElementById('mouthYLocation').value);
+	let mouthYLocation = 400+parseInt(document.getElementById('mouthYLocation').value);
 	var mouthRotation = parseInt(document.getElementById('mouthRotation').value);
 	mouthRotation = degreesToRadians(mouthRotation);
 	context.translate(mouthXLocation, mouthYLocation);
@@ -122,7 +123,7 @@ function randomizeColor() {
 }
 
 function randomizeFace() {
-	document.getElementById('eyesType').value = Math.floor(Math.random() * 16) + 1;
+	document.getElementById('eyesType').value = Math.floor(Math.random() * 24) + 1;
   document.getElementById('mouthType').value = Math.floor(Math.random() * 16) + 1;
 }
 
