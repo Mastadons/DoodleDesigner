@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,900&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="./style.css">
 	<title>Doodle Designer</title>
 </head>
 <body>
 	<!--<img width="250" height="150" src="./eyes/eyes.001.png">-->
-	<canvas id="render" width="600" height="500"></canvas>
+	<div style='float:left'>
+		<canvas id="render" width="600" height="500"></canvas>
+	</div>
 
-	<br>
-	<input type="color" id="earsColor" name="Ears Color" value="#ff0000">
-	<label for="earsColor">Ears Color</label>
-	
-	<br>
-	<input type="color" id="bodyColor" name="Body Color" value="#ff0000">
-	<label for="bodyColor">Body Color</label>
-	
-	<br>
-	<input type="range" min="1" max="16" value="1" id="eyesType" class="slider">
-	<label for="eyesType">Eyes Type</label>
+	<div style='float:left; width:auto;'>
+		<br>
+		<div>
+			<input type="color" id="earsColor" name="Ears Color" value="#ff0000">
+			<label for="earsColor">Ears Color</label>
+		</div>
+		
+		<br>
+		<input type="color" id="bodyColor" name="Body Color" value="#ff0000">
+		<label for="bodyColor">Body Color</label>
+		
+		<br>
+		<input type="range" min="1" max="16" value="1" id="eyesType" class="styled_slider">
+		<label for="eyesType">Eyes Type</label>
 
-	<br>
-	<input type="range" min="-25" max="25" value="0" id="eyesXLocation">
-	<label for="eyesXLocation">Eyes X Location</label>
+		<br>
+		<input type="range" min="-25" max="25" value="0" id="eyesXLocation" class="styled_slider">
+		<label for="eyesXLocation">Eyes X Location</label>
 
-	<br>
-	<input type="range" min="-25" max="25" value="0" id="eyesYLocation">
-	<label for="eyesYLocation">Eyes Y Location</label>
+		<br>
+		<input type="range" min="-25" max="25" value="0" id="eyesYLocation" class="styled_slider">
+		<label for="eyesYLocation">Eyes Y Location</label>
 
-	<br>
-	<input type="range" min="-25" max="25" value="0" id="mouthXLocation">
-	<label for="mouthXLocation">Mouth X Location</label>
+		<br>
+		<input type="range" min="-25" max="25" value="0" id="mouthXLocation" class="styled_slider">
+		<label for="mouthXLocation">Mouth X Location</label>
 
-	<br>
-	<input type="range" min="-25" max="25" value="0" id="mouthYLocation">
-	<label for="mouthYLocation">Mouth Y Location</label>
+		<br>
+		<input type="range" min="-25" max="25" value="0" id="mouthYLocation" class="styled_slider">
+		<label for="mouthYLocation">Mouth Y Location</label>
 
-	<br>
-	<input type="range" min="1" max="16" value="1" id="mouthType">
-	<label for="mouthType">Mouth Type</label>
+		<br>
+		<input type="range" min="1" max="16" value="1" id="mouthType" class="styled_slider">
+		<label for="mouthType">Mouth Type</label>
 
-	<br>
-	<button type="button" id="downloadButton">Download Doodle</button>
-
+		<br>
+		<button type="button" id="downloadButton" class="styled_button">Download Doodle</button>
+	</div>
 	<script type="text/javascript" src="./main.js"></script>
 </body>
 </html>
