@@ -53,7 +53,7 @@ async function draw() {
   context.drawImage(tintImage(bodyImage, bodyColor), 0, 0);
 	
 	let eyesXLocation = 300+parseInt(document.getElementById('eyesXLocation').value);
-	let eyesYLocation = 250+parseInt(document.getElementById('eyesYLocation').value)+25;
+	let eyesYLocation = 275+parseInt(document.getElementById('eyesYLocation').value)+25;
 	var eyesRotation = parseInt(document.getElementById('eyesRotation').value);
 
 	if (eyesType == 3 && eyesRotation > -155 && eyesRotation < -45) { 
@@ -81,7 +81,7 @@ async function draw() {
 	context.drawImage(mouthImage, -mouthImage.width/2, -mouthImage.height/2, mouthImage.width, mouthImage.height);
 	context.rotate(-mouthRotation);
 	context.translate(-mouthXLocation, -mouthYLocation);
-
+  
 	context.drawImage(outlineImage, 0, 0);
 
 	window.requestAnimationFrame(draw)
