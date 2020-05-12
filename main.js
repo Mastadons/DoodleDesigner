@@ -1,7 +1,7 @@
 const imageHeader = 'https://raw.githubusercontent.com/Mastadons/DoodleDesigner/master/'
 
 var canvas;
-var ctx;
+var context;
 var windowLoaded = false;
 var earsImage;
 var bodyImage;
@@ -9,7 +9,7 @@ var outlineImage;
 
 window.onload = async function() {
   canvas = document.getElementById("render");
-  ctx = canvas.getContext("2d");
+  context = canvas.getContext("2d");
 
   earsImage = await loadImage('ears.png')
   bodyImage = await loadImage('body.png')
@@ -34,6 +34,7 @@ async function draw() {
 		window.requestAnimationFrame(draw)
 		return;
 	}
+
 	let eyesType = parseInt(document.getElementById('eyesType').value);
 	let mouthType = parseInt(document.getElementById('mouthType').value);
 	
@@ -43,23 +44,45 @@ async function draw() {
 	let earsColor = document.getElementById('earsColor').value;
 	let bodyColor = document.getElementById('bodyColor').value;
 
-	ctx.drawImage(earsImage, 0, 0);
-	ctx.globalAlpha = 1.0;
-  ctx.drawImage(tintImage(earsImage, earsColor), 0, 0);
+	context.drawImage(earsImage, 0, 0);
+	context.globalAlpha = 1.0;
+  context.drawImage(tintImage(earsImage, earsColor), 0, 0);
 
-	ctx.drawImage(bodyImage, 0, 0);
-	ctx.globalAlpha = 1.0;
-  ctx.drawImage(tintImage(bodyImage, bodyColor), 0, 0);
+	context.drawImage(bodyImage, 0, 0);
+	context.globalAlpha = 1.0;
+  context.drawImage(tintImage(bodyImage, bodyColor), 0, 0);
 	
-	ctx.drawImage(outlineImage, 0, 0);
+	let eyesXLocation = 300+parseInt(document.getElementById('eyesXLocation').value);
+	let eyesYLocation = 250+parseInt(document.getElementById('eyesYLocation').value)+25;
+	var eyesRotation = parseInt(document.getElementById('eyesRotation').value);
 
-	let eyesXLocation = parseInt(document.getElementById('eyesXLocation').value);
-	let eyesYLocation = parseInt(document.getElementById('eyesYLocation').value)+25;
-	ctx.drawImage(eyesImage, 150+eyesXLocation, 150+eyesYLocation);
+	if (eyesType == 3 && eyesRotation > -155 && eyesRotation < -45) { 
+		if (eyesRotation < -100) { eyesRotation = -155; 
+		} else { eyesRotation = -45; }
+	}
+	if (eyesType == 3 && eyesRotation < 155 && eyesRotation > 45) { 
+		if (eyesRotation > 100) { eyesRotation = 155; 
+		} else { eyesRotation = 45; }
+	}
 
-	let mouthXLocation = parseInt(document.getElementById('mouthXLocation').value);
-	let mouthYLocation = parseInt(document.getElementById('mouthYLocation').value)+25;
-	ctx.drawImage(mouthImage, 150+mouthXLocation, 250+mouthYLocation);
+	eyesRotation = degreesToRadians(eyesRotation);
+	context.translate(eyesXLocation, eyesYLocation);
+	context.rotate(eyesRotation);
+	context.drawImage(eyesImage, -eyesImage.width/2, -eyesImage.height/2, eyesImage.width, eyesImage.height);
+	context.rotate(-eyesRotation);
+	context.translate(-eyesXLocation, -eyesYLocation);
+
+	let mouthXLocation = 300+parseInt(document.getElementById('mouthXLocation').value);
+	let mouthYLocation = 375+parseInt(document.getElementById('mouthYLocation').value);
+	var mouthRotation = parseInt(document.getElementById('mouthRotation').value);
+	mouthRotation = degreesToRadians(mouthRotation);
+	context.translate(mouthXLocation, mouthYLocation);
+	context.rotate(mouthRotation);
+	context.drawImage(mouthImage, -mouthImage.width/2, -mouthImage.height/2, mouthImage.width, mouthImage.height);
+	context.rotate(-mouthRotation);
+	context.translate(-mouthXLocation, -mouthYLocation);
+
+	context.drawImage(outlineImage, 0, 0);
 
 	window.requestAnimationFrame(draw)
 };
@@ -78,8 +101,11 @@ function tintImage(img, color) {
   // destination atop makes a result with an alpha channel identical to fg, but with all pixels retaining their original color *as far as I can tell*
   bx.globalCompositeOperation = "destination-atop";
   bx.drawImage(img,0,0);
-
   return buffer;
+}
+
+function degreesToRadians(degrees) {
+  return degrees * (Math.PI/180.0);
 }
 
 document.getElementById('downloadButton').onclick = function(button) {
