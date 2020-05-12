@@ -1,3 +1,5 @@
+const imageHeader = 'https://raw.githubusercontent.com/Mastadons/DoodleDesigner/master/'
+
 var canvas;
 var ctx;
 var windowLoaded = false;
@@ -9,9 +11,9 @@ window.onload = async function() {
   canvas = document.getElementById("render");
   ctx = canvas.getContext("2d");
 
-  earsImage = await loadImage('./ears.png')
-  bodyImage = await loadImage('./body.png')
-  outlineImage = await loadImage('./outline.png')
+  earsImage = await loadImage('ears.png')
+  bodyImage = await loadImage('body.png')
+  outlineImage = await loadImage('outline.png')
   windowLoaded = true;
   console.log("Window finished loading")
 }
@@ -19,10 +21,10 @@ window.onload = async function() {
 function loadImage(src) {
   return new Promise((resolve, reject) => {
     let img = new Image()
-    img.setAttribute('crossOrigin', 'anonymous');
+    img.crossOrigin = '*'
     img.onload = () => resolve(img)
     img.onerror = reject
-    img.src = src
+    img.src = imageHeader + src
   })
 }
 
@@ -35,8 +37,8 @@ async function draw() {
 	let eyesType = parseInt(document.getElementById('eyesType').value);
 	let mouthType = parseInt(document.getElementById('mouthType').value);
 	
-	let eyesImage = await loadImage(`./eyes/eyes.${eyesType.toString().padStart(3, '0')}.png`);
-	let mouthImage = await loadImage(`./mouths/mouths.${mouthType.toString().padStart(3, '0')}.png`);
+	let eyesImage = await loadImage(`eyes/eyes.${eyesType.toString().padStart(3, '0')}.png`);
+	let mouthImage = await loadImage(`mouths/mouths.${mouthType.toString().padStart(3, '0')}.png`);
 
 	let earsColor = document.getElementById('earsColor').value;
 	let bodyColor = document.getElementById('bodyColor').value;
@@ -81,8 +83,10 @@ function tintImage(img, color) {
 }
 
 document.getElementById('downloadButton').onclick = function(button) {
-	var image = canvas.toDataURL("image/png");
-  button.href = image;
+	var link = document.createElement('a');
+  link.download = 'designed-doodle.png';
+  link.href = canvas.toDataURL('image/png')
+  link.click();
 };
 
 window.requestAnimationFrame(draw)
