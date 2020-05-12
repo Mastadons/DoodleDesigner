@@ -8,9 +8,9 @@ var bodyImage;
 var outlineImage;
 
 window.onload = async function() {
-	document.getElementById('earsColor').value = randomColor();
-	document.getElementById('bodyColor').value = randomColor();
-  
+	randomizeColor()
+	randomizeFace()
+	
   canvas = document.getElementById("render");
   context = canvas.getContext("2d");
 
@@ -116,6 +116,16 @@ function randomColor() {
 	return "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
 }
 
+function randomizeColor() {
+	document.getElementById('earsColor').value = randomColor();
+	document.getElementById('bodyColor').value = randomColor();
+}
+
+function randomizeFace() {
+	document.getElementById('eyesType').value = Math.floor(Math.random() * 16) + 1;
+  document.getElementById('mouthType').value = Math.floor(Math.random() * 16) + 1;
+}
+
 document.getElementById('downloadButton').onclick = function(button) {
 	var link = document.createElement('a');
   link.download = 'designed-doodle.png';
@@ -123,9 +133,7 @@ document.getElementById('downloadButton').onclick = function(button) {
   link.click();
 };
 
-document.getElementById('randomizeColor').onclick = function(button) {
-	document.getElementById('earsColor').value = randomColor();
-	document.getElementById('bodyColor').value = randomColor();
-};
+document.getElementById('randomizeColor').onclick = randomizeColor
+document.getElementById('randomizeFace').onclick = randomizeFace
 
 window.requestAnimationFrame(draw)
